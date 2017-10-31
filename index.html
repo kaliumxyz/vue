@@ -1,0 +1,78 @@
+<script src="https://unpkg.com/vue"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<script>
+
+Vue.component('sidebar-item', {
+    props: ["item"],
+    template: `<a> {{item.text}} </a>`
+})
+</script>
+<style scoped>
+    body {
+        font-size: 10px;
+        background: #EEE;
+        font-family: 'Roboto', sans-serif;
+
+    }
+    .sidebar {
+        min-width: 4em;
+        width: 20%;
+        max-width: 20em;
+        background: black;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .sidebar a {
+        color: white;
+        text-align: center;
+        padding: 2em;
+        background: #111;
+        text-decoration: none;
+    }
+    .sidebar a:hover{
+        background: #222;
+    }
+</style>
+<!-- Create an instance of the todo-item component -->
+<div id="dashboard">
+    <section class='sidebar'>
+        <sidebar-item 
+        v-for="item in menu"
+        v-bind:item="item"
+        v-bind:key="item.text"
+        v-bind:href="item.link"
+        ></sidebar-item>
+    </section>
+    <main>
+        <main-item 
+        v-for="item in main"
+        v-bind:item="item"
+        v-bind:key="item.text"
+        v-bind:href="item.link"
+        ></main-item>
+    </main>
+</div>
+
+
+
+<script>
+let dashboard  = new Vue({
+  el: '#dashboard',
+  data: {
+    menu: [
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" }
+    ]
+  }
+})
+</script>
