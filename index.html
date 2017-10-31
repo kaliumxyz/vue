@@ -7,13 +7,21 @@ Vue.component('sidebar-item', {
     props: ["item"],
     template: `<a> {{item.text}} </a>`
 })
+
+Vue.component('main-item', {
+    props: ["item"],
+    template: `<div> <img /> </div>`
+})
 </script>
 <style scoped>
     body {
         font-size: 10px;
         background: #EEE;
         font-family: 'Roboto', sans-serif;
-
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
     }
     .sidebar {
         min-width: 4em;
@@ -37,6 +45,19 @@ Vue.component('sidebar-item', {
     .sidebar a:hover{
         background: #222;
     }
+    div {
+        width: 200px;
+        background: black;
+        height: 200px;
+    }
+    div:hover {
+        background: #222;
+    }
+    main {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+    }
 </style>
 <!-- Create an instance of the todo-item component -->
 <div id="dashboard">
@@ -54,6 +75,7 @@ Vue.component('sidebar-item', {
         v-bind:item="item"
         v-bind:key="item.text"
         v-bind:href="item.link"
+        v-on:click="removeItem"
         ></main-item>
     </main>
 </div>
@@ -72,7 +94,23 @@ let dashboard  = new Vue({
       { text: 'google', link: "https://google.nl" },
       { text: 'google', link: "https://google.nl" },
       { text: 'google', link: "https://google.nl" }
+    ],
+    main: [
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" },
+      { text: 'google', link: "https://google.nl" }
     ]
+  },
+  methods: {
+      removeItem: function () {
+          console.log('test')
+          menu.pop()
+          this.remove()
+      }
   }
 })
 </script>
