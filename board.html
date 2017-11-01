@@ -28,32 +28,6 @@
 		<span> /WDG/ </span>
 		`
 	})
-	Vue.component('post', {
-		template: `<div class="postContainer replyContainer" id='pc${no}'>
-   <div class="sideArrows" id='sa${no}'>&gt;&gt;</div>
-   <div id='p${no}' class="post reply">
-      <div class="postInfoM mobile" id='pim${post_id}'>
-        <span class="nameBlock"><span class="name">'${name}'</span><br></span>
-        <span class="dateTime postNum" data-utc='${time}'>'${now}'
-          <a href='#p${no}' title="Link to this post">No.</a>
-          <a href='javascript:quote('${no}');' title="Reply to this post">'${no}'</a></span>
-      </div>
-      <div class="postInfo desktop" id='pi${post_id}'><input type="checkbox" name='${post_id}' value="delete">
-        <span class="nameBlock"><span class="name">'${name}'</span> </span>
-        <span class="dateTime postNum" data-utc='${time}'>'${now}'
-        <span class="dateTime" data-utc='${time}'>'${now}'</span>
-        <span class="postNum desktop">
-          <a href='$#p{no}' title="Link to this post">No.</a>
-          <a href='javascript:quote('${no}');' title="Reply to this post">'${no}'</a></span>
-          <a href="#" class="postMenuBtn" title="Post menu" data-cmd="post-menu">▶</a>
-        </div>
-      <blockquote class="postMessage" id='m${no}'>
-        '${images} <br> ${replies} <br> <br> ${com}'
-      </blockquote>
-   </div>
-</div>
-		`
-	})
 </script>
 <style scoped>
 	.title {
@@ -140,11 +114,10 @@
 <div id="dashboard">
 	<header>
 		<logo></logo>
-		sort by: <select> <option v-for="option in options"> {{ option.text }} </option> </select>	
+		sort by: <select> <option> {{ options }} </option>
 	</header>
 	<section class='sidebar'>
 		<sidebar-item v-for="item in menu" v-bind:item="item" v-bind:key="item.text" v-bind:href="item.link" ></sidebar-item>
-		<div class='toggle'> </div>
 	</section>
 	<main>
 		<main-item class="content" v-for="item in main" v-bind:item="item" v-bind:key="item.text" v-bind:href="item.link" v-on:click="removeItem"></main-item>
@@ -157,11 +130,7 @@
 	let dashboard = new Vue({
 		el: '#dashboard',
 		data: {
-			options: [
-				{text: "/g/"},
-				{text: "/g/"},
-				{text: "/g/"}
-			],
+			options: [],
 			menu: [
 				{ text: 'google', link: "a" },
 				{ text: 'google', link: "https://google.nl" },
@@ -191,5 +160,5 @@
 		}
 	})
 	
-	// fetch('http://a.4cdn.org/g/catalog.json').then(x => x.blob()).then(console.log)
+	fetch('http://a.4cdn.org/g/catalog.json').then(x => x.blob()).then(console.log)
 </script>

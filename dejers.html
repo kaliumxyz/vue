@@ -3,10 +3,15 @@
 
 <script>
 
-Vue.component('main-letter', {
-    props: ["item"],
-    template: `<span> {{item.letter}} </span>`
-})
+    Vue.component('main-letter', {
+        props: ["item"],
+        methods: {
+            changeColor: function () {
+                this.$el.remove()
+            }
+        },
+        template: `<span v-on:hover="changeColor"> {{item.letter}} </span>`
+    })
 </script>
 <style scoped>
     body {
@@ -18,6 +23,7 @@ Vue.component('main-letter', {
         padding: 0;
         margin: 0;
     }
+
     .sidebar {
         min-width: 4em;
         width: 20%;
@@ -30,6 +36,7 @@ Vue.component('main-letter', {
         display: flex;
         flex-direction: column;
     }
+
     .sidebar a {
         color: white;
         text-align: center;
@@ -37,20 +44,24 @@ Vue.component('main-letter', {
         background: #111;
         text-decoration: none;
     }
-    .sidebar a:hover{
+
+    .sidebar a:hover {
         background: #222;
     }
+
     span {
         width: 100%;
         background: black;
         height: 100%;
-	font-size: 10em;
-	color: white;
-	text-align: center;
+        font-size: 10em;
+        color: white;
+        text-align: center;
     }
+
     span:hover {
         background: #222;
     }
+
     main {
         display: flex;
         width: 100vw;
@@ -59,58 +70,51 @@ Vue.component('main-letter', {
 </style>
 <!-- Create an instance of the todo-item component -->
 <main>
-<main-letter
-v-for="item in letters"
-v-bind:item="item"
-v-bind:key="item.letter"
-@click="changeColor"
-@click.native="changeColor"
-v-on:hover="changeColor"
-v-bind:style="{background: item.color}"
-></main-letter>
+    <main-letter v-for="item in letters" v-bind:item="item" v-bind:key="item.letter" @click="changeColor" @click.native="changeColor"
+        v-on:hover="changeColor" v-bind:style="{background: item.color}"></main-letter>
 </main>
 
 
 
 <script>
-function randomizeColor(arr) {
-	return arr.map(x => x.color = `hsla(${rand(360)},100%, 50%, 1)`)
-}
+    function randomizeColor(arr) {
+        return arr.map(x => x.color = `hsla(${rand(360)},100%, 50%, 1)`)
+    }
 
-function changeLetters(str, comp) {
-	while(comp.letters)
-	comp.letters.pop()
-		return str.split("").map(x => comp.letters.push({letter: x, color: randomColor()}))
-}
+    function changeLetters(str, comp) {
+        while (comp.letters)
+            comp.letters.pop()
+        return str.split("").map(x => comp.letters.push({ letter: x, color: randomColor() }))
+    }
 
-function randomColor() {
-	return `hsla(${rand(360)},100%, 50%, 1)`
-}
+    function randomColor() {
+        return `hsla(${rand(360)},100%, 50%, 1)`
+    }
 
-function rand(value = 100) {
-	return Math.ceil(Math.random()*value)
-}
+    function rand(value = 100) {
+        return Math.ceil(Math.random() * value)
+    }
 
-let dashboard  = new Vue({
-  el: 'main',
-  data: {
-    letters: [
-      { letter: 'D', color: randomColor() },
-      { letter: 'e', color: randomColor() },
-      { letter: 'j', color: randomColor() },
-      { letter: 'e', color: randomColor() },
-      { letter: 'r', color: randomColor() },
-      { letter: 's', color: randomColor() },
-    ],
-  },
-  methods: {
-      changeColor: function () {
-	this.color = randomColor()
-		console.log(this)
-          console.log('test')
-      }
-  }
-})
+    let dashboard = new Vue({
+        el: 'main',
+        data: {
+            letters: [
+                { letter: 'D', color: randomColor() },
+                { letter: 'e', color: randomColor() },
+                { letter: 'j', color: randomColor() },
+                { letter: 'e', color: randomColor() },
+                { letter: 'r', color: randomColor() },
+                { letter: 's', color: randomColor() },
+            ],
+        },
+        methods: {
+            changeColor: function () {
+                this.color = randomColor()
+                console.log(this)
+                console.log('test')
+            }
+        }
+    })
 
-setInterval(_ => randomizeColor(dashboard.letters), 1000)
+    setInterval(_ => randomizeColor(dashboard.letters), 1000)
 </script>
