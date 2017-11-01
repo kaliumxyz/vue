@@ -1,0 +1,116 @@
+<script src="https://unpkg.com/vue"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<script>
+
+Vue.component('main-letter', {
+    props: ["item"],
+    template: `<span> {{item.letter}} </span>`
+})
+</script>
+<style scoped>
+    body {
+        font-size: 10px;
+        background: #EEE;
+        font-family: 'Roboto', sans-serif;
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+    }
+    .sidebar {
+        min-width: 4em;
+        width: 20%;
+        max-width: 20em;
+        background: black;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .sidebar a {
+        color: white;
+        text-align: center;
+        padding: 2em;
+        background: #111;
+        text-decoration: none;
+    }
+    .sidebar a:hover{
+        background: #222;
+    }
+    span {
+        width: 100%;
+        background: black;
+        height: 100%;
+	font-size: 10em;
+	color: white;
+	text-align: center;
+    }
+    span:hover {
+        background: #222;
+    }
+    main {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+    }
+</style>
+<!-- Create an instance of the todo-item component -->
+<main>
+<main-letter
+v-for="item in letters"
+v-bind:item="item"
+v-bind:key="item.letter"
+@click="changeColor"
+@click.native="changeColor"
+v-on:hover="changeColor"
+v-bind:style="{background: item.color}"
+></main-letter>
+</main>
+
+
+
+<script>
+function randomizeColor(arr) {
+	return arr.map(x => x.color = `hsla(${rand(360)},100%, 50%, 1)`)
+}
+
+function changeLetters(str, comp) {
+	while(comp.letters)
+	comp.letters.pop()
+		return str.split("").map(x => comp.letters.push({letter: x, color: randomColor()}))
+}
+
+function randomColor() {
+	return `hsla(${rand(360)},100%, 50%, 1)`
+}
+
+function rand(value = 100) {
+	return Math.ceil(Math.random()*value)
+}
+
+let dashboard  = new Vue({
+  el: 'main',
+  data: {
+    letters: [
+      { letter: 'D', color: randomColor() },
+      { letter: 'e', color: randomColor() },
+      { letter: 'j', color: randomColor() },
+      { letter: 'e', color: randomColor() },
+      { letter: 'r', color: randomColor() },
+      { letter: 's', color: randomColor() },
+    ],
+  },
+  methods: {
+      changeColor: function () {
+	this.color = randomColor()
+		console.log(this)
+          console.log('test')
+      }
+  }
+})
+
+setInterval(_ => randomizeColor(dashboard.letters), 1000)
+</script>
