@@ -2,115 +2,137 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 <script>
+	let item;
+	Vue.component('sidebar-item', {
+		props: ["item"],
+		methods: {
+			removeItem: function (ev) {
+				ev.preventDefault()
+				item = this;
+				
+			}
+		},
+		template: `<a v-on:click="removeItem"> {{item.text}} </a>`
+	})
 
-Vue.component('sidebar-item', {
-    props: ["item"],
-    template: `<a> {{item.text}} </a>`
-})
-
-Vue.component('main-item', {
-    props: ["item"],
-    template: `<div> <img /> </div>`
-})
+	Vue.component('main-item', {
+		props: ["item"],
+		template: `
+		<div> 
+			<img v-bind:src="item.image" />
+			<span class="title"> {{item.text}} </span>
+		</div>
+		`
+	})
 </script>
 <style scoped>
-    body {
-        font-size: 10px;
-        background: #EEE;
-        font-family: 'Roboto', sans-serif;
-        width: 100vw;
-        height: 100vh;
-        padding: 0;
-        margin: 0;
-    }
-    .sidebar {
-        min-width: 4em;
-        width: 20%;
-        max-width: 20em;
-        background: black;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-    }
-    .sidebar a {
-        color: white;
-        text-align: center;
-        padding: 2em;
-        background: #111;
-        text-decoration: none;
-    }
-    .sidebar a:hover{
-        background: #222;
-    }
-    div {
-        width: 200px;
-        background: black;
-        height: 200px;
-    }
-    div:hover {
-        background: #222;
-    }
-    main {
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-    }
+	.title {
+		width: 100%;
+		background: black;
+		color: white;
+		display: block;
+		font-size: 1.3em;
+
+	}
+	body {
+		font-size: 10px;
+		background: #EEE;
+		font-family: 'Roboto', sans-serif;
+		width: 100vw;
+		height: 100vh;
+		padding: 0;
+		margin: 0;
+	}
+
+	.sidebar {
+		min-width: 4em;
+		width: 20%;
+		max-width: 20em;
+		background: black;
+		height: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.sidebar a {
+		color: white;
+		text-align: center;
+		padding: 2em;
+		background: #111;
+		text-decoration: none;
+	}
+
+	.sidebar a:hover {
+		background: #222;
+	}
+
+	.content {
+		width: 200%;
+		background: black;
+		height: 200px;
+	}
+
+	.content:hover {
+		background: #222;
+	}
+
+	main {
+		display: flex;
+		width: 100vw;
+		height: 100vh;
+	}
+	img {
+		max-width: 100%;
+		height: 100%;
+	}
+	#dashboard{
+		width: 100%;
+	}
 </style>
 <!-- Create an instance of the todo-item component -->
 <div id="dashboard">
-    <section class='sidebar'>
-        <sidebar-item 
-        v-for="item in menu"
-        v-bind:item="item"
-        v-bind:key="item.text"
-        v-bind:href="item.link"
-        ></sidebar-item>
-    </section>
-    <main>
-        <main-item 
-        v-for="item in main"
-        v-bind:item="item"
-        v-bind:key="item.text"
-        v-bind:href="item.link"
-        v-on:click="removeItem"
-        ></main-item>
-    </main>
+	<section class='sidebar'>
+		<sidebar-item v-for="item in menu" v-bind:item="item" v-bind:key="item.text" v-bind:href="item.link" ></sidebar-item>
+	</section>
+	<main>
+		<main-item class="content" v-for="item in main" v-bind:item="item" v-bind:key="item.text" v-bind:href="item.link" v-on:click="removeItem"></main-item>
+	</main>
 </div>
 
 
 
 <script>
-let dashboard  = new Vue({
-  el: '#dashboard',
-  data: {
-    menu: [
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" }
-    ],
-    main: [
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" },
-      { text: 'google', link: "https://google.nl" }
-    ]
-  },
-  methods: {
-      removeItem: function () {
-          console.log('test')
-          menu.pop()
-          this.remove()
-      }
-  }
-})
+	let dashboard = new Vue({
+		el: '#dashboard',
+		data: {
+			menu: [
+				{ text: 'google', link: "" },
+				{ text: 'google', link: "https://google.nl" },
+				{ text: 'google', link: "https://google.nl" },
+				{ text: 'google', link: "https://google.nl" },
+				{ text: 'google', link: "https://google.nl" },
+				{ text: 'google', link: "https://google.nl" },
+				{ text: 'google', link: "https://google.nl" }
+			],
+			main: [
+				{ text: 'imperial pic', image: "https://i.imgur.com/NrakCxI.jpg" },
+				{ text: 'something pic', image: "https://i.imgur.com/NrakCxI.jpg" },
+				{ text: 'wicked pic', image: "https://i.imgur.com/NrakCxI.jpg" },
+				{ text: 'google', image: "https://i.imgur.com/NrakCxI.jpg" },
+				{ text: 'google', image: "https://i.imgur.com/NrakCxI.jpg" },
+				{ text: 'google', image: "https://i.imgur.com/NrakCxI.jpg" }
+			]
+		},
+		methods: {
+			removeItem: function (ev) {
+				ev.preventDefault()
+				console.log('test')
+				menu.pop()
+				this.remove()
+			}
+		}
+	})
 </script>
