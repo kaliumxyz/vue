@@ -6,11 +6,9 @@
 		props: ["item"],
 		methods: {
 			get: function (item) {
-				
-				return ev => ev.preventDefault()
 			}
 		},
-		template: `<a v-on:click="get(text.link)"> {{item.text}} </a>`
+		template: `<a v-on:click.prevent="get(text.link)"> {{item.text}} </a>`
 	})
 
 	Vue.component('main-item', {
@@ -26,32 +24,6 @@
 	Vue.component('logo', {
 		template: `
 		<span> /WDG/ </span>
-		`
-	})
-	Vue.component('post', {
-		template: `<div class="postContainer replyContainer" id='pc${no}'>
-   <div class="sideArrows" id='sa${no}'>&gt;&gt;</div>
-   <div id='p${no}' class="post reply">
-      <div class="postInfoM mobile" id='pim${post_id}'>
-        <span class="nameBlock"><span class="name">'${name}'</span><br></span>
-        <span class="dateTime postNum" data-utc='${time}'>'${now}'
-          <a href='#p${no}' title="Link to this post">No.</a>
-          <a href='javascript:quote('${no}');' title="Reply to this post">'${no}'</a></span>
-      </div>
-      <div class="postInfo desktop" id='pi${post_id}'><input type="checkbox" name='${post_id}' value="delete">
-        <span class="nameBlock"><span class="name">'${name}'</span> </span>
-        <span class="dateTime postNum" data-utc='${time}'>'${now}'
-        <span class="dateTime" data-utc='${time}'>'${now}'</span>
-        <span class="postNum desktop">
-          <a href='$#p{no}' title="Link to this post">No.</a>
-          <a href='javascript:quote('${no}');' title="Reply to this post">'${no}'</a></span>
-          <a href="#" class="postMenuBtn" title="Post menu" data-cmd="post-menu">▶</a>
-        </div>
-      <blockquote class="postMessage" id='m${no}'>
-        '${images} <br> ${replies} <br> <br> ${com}'
-      </blockquote>
-   </div>
-</div>
 		`
 	})
 </script>
@@ -133,17 +105,21 @@
 		top: 0;
 		z-index: 1000;
 		width: 100vw;
-		
+	}
+	.time {
+		width: 100%;
+		font-size: 200px;
+		height: 100%;
 	}
 </style>
-<!-- Create an instance of the todo-item component -->
 <div id="dashboard">
 	<header>
-		<logo></logo>
-		sort by: <select> <option v-for="option in options"> {{ option.text }} </option> </select>	
+		<!-- <logo></logo> -->
+		<span> /WDG/ </span>
+		<!-- sort by: <select> <option v-for="option in options"> {{ option.text }} </option> </select>	 -->
 	</header>
 	<section class='sidebar'>
-		<sidebar-item v-for="item in menu" v-bind:item="item" v-bind:key="item.text" v-bind:href="item.link" ></sidebar-item>
+		<a  v-for="item in menu" v-bind:key="item.text" v-on:click.prevent="get"v-bind:href="item.link"> {{item.text}} </a>
 		<div class='toggle'> </div>
 	</section>
 	<main>
@@ -183,10 +159,9 @@
 		},
 		methods: {
 			removeItem: function (ev) {
-				ev.preventDefault()
-				console.log('test')
-				menu.pop()
-				this.remove()
+			},
+			get: function (ev) {
+				this.menu.pop()
 			}
 		}
 	})
