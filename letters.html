@@ -41,14 +41,11 @@
 		width: 100%;
 		background: black;
 		height: 100%;
-		font-size: 10em;
+		font-size: 20em;
 		color: white;
 		text-align: center;
 	}
 
-	span:hover {
-		background: #222;
-	}
 
 	main {
 		display: flex;
@@ -56,17 +53,26 @@
 		height: 100vh;
 	}
 	input {
-		width: 400px;
+		width: 100%;
 		position: fixed;
+	}
+	.fence{
+		width: 100%;
+		background: white;
+		position: absolute;
+		margin-top: 340px;
+		height: calc(100% - 340px);
+		font-size: 200px;
 	}
 </style>
 <!-- Create an instance of the todo-item component -->
 <main>
-	<span	v-for="item in letters" 
+	<span	v-for="(item, index) in letters" 
 		v-bind:item="item"
 		v-bind:key="item"
-		v-bind:style="{background: letterColor(item)}">{{ item }} </span>
-	<input v-model="input" type='text'>
+		v-bind:style="{background: color(item.charCodeAt(0) * 10 * index+1)}">{{ item }} </span>
+	<input class="fence"v-model="input" type='text'>
+	<!-- <span class="fence"></span> -->
 </main>
 
 
@@ -87,11 +93,8 @@
 			letters: "Dejers"
 		},
 		methods: {
-			randomColor: function () {
-				return `hsla(${rand(360)},100%, 50%, 1)`
-			},
-			letterColor: function(char) {
-				return `hsla(${char.charCodeAt(0)*10},100%, 50%, 1)`
+			color: function (n) {
+				return `hsla(${n || rand(360)},100%, 50%, 1)`
 			}
 		},
 		watch: {
